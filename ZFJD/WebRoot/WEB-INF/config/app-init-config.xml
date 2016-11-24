@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app-init-config>
+  
+  <!-- ******************************** 定义组织机构信息  ******************************** -->
+  
+  <!-- 上海 -->
+  <organiz name="部中心" region="全国" contacts="张三" tel="13812345678">
+    <department name="总队" >
+       <person number="no:0001" trueName="张三" userName="zhang3" tel="13812345678" />
+    </department>
+    <department name="一支队" ></department>
+    <department name="三支队" ></department>
+    <department name="五支队" ></department>
+    <department name="七支队" ></department>
+    <department name="技术中心" ></department>
+  </organiz>
+  
+  <!-- **************************** 定义系统模块信息及操作信息  **************************** -->
+  
+  <!-- 控件、按钮操作 -->
+  <operations operType="0" >
+    <operation name="禁用" code="0x0000" />
+    <operation name="启用" code="0x0001" />
+    <!--operation name="隐藏" code="0x0010" />
+    <operation name="显示" code="0x0011" /-->
+  </operations>
+  
+  <!-- 数据读取操作 -->
+  <operations operType="1">
+  	<operation name="禁止读取" code="1x0000" />
+    <operation name="读取全部" code="1x0001" />
+    <operation name="所属组织" code="1x0010" />
+    <operation name="所属部门" code="1x0011" />
+    <operation name="个人数据" code="1x0100" />
+  </operations>
+  
+  <!-- 模块1 -->
+  <module name="寄递物流侦控系统">
+    
+  </module>
+  
+  <!-- ********************** 定义系统角色信息及人员、角色、权限关系  *********************** -->
+  
+  <role name="系统管理员" >
+    <person userName="zhang3" />
+    
+    
+  </role>
+  
+  <!-- 黑名单检测方式 -->
+  <blackitem name="非常重要"/>
+  <blackitem name="重要"/>
+  <blackitem name="一般"/>
+</app-init-config>

@@ -1,0 +1,161 @@
+@charset "utf-8";
+
+html,body {
+	font-family: "新宋体", Arial;
+	font-size: 12px;
+	background: #ccc;
+}
+
+.login-base-bj {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#base-shade {
+	background: url(../../login_images/base-shade.png) no-repeat;
+	z-index: 1;
+}
+
+#base-grid {
+	background: url(../login_images/base-grid.png) repeat;
+	z-index: 2;
+}
+
+#base-left-bj {
+	background: url(../login_images/base-left-bj.png) top left no-repeat;
+	z-index: 3;
+}
+
+#base-right-bj {
+	background: url(../login_images/base-right-bj.png) top right no-repeat;
+	z-index: 3;
+}
+
+#base-bottom-bj {
+	background: url(../login_images/base-bottom-bj.png) bottom right
+		no-repeat;
+	z-index: 3;
+}
+
+#base-line {
+	background: url(../images/login/login.jpg) round;
+	z-index: 4;
+}
+
+#login-bj {
+	width: 100%;
+	height: 198px;
+	background: url(../login_images/login-bj.png) repeat-x;
+	position: absolute;
+	top: 35%;
+	z-index: 3;
+}
+
+#login-logo {
+	width: 453px;
+	height: 209px;
+	background: url(../login_images/login-logo.png) no-repeat;
+	position: absolute;
+	top: 32%;
+	left: 10%;
+	z-index: 3;
+}
+
+#sys-name {
+	width: 671px;
+	height: 125px;
+	background: url(../login_images/sys-name.png) no-repeat;
+	position: absolute;
+	top: 15%;
+	left: 10%;
+	z-index: 3;
+}
+
+#login-form-bj {
+	width: 349px;
+	height: 221px;
+	background: url(../login_images/login-form-bj.png) no-repeat;
+	position: absolute;
+	top: 35%;
+	left: 50%;
+	z-index: 3;
+}
+
+#login-form {
+	width: 700px;
+	height: 160px;
+	position: absolute;
+	top: 74%;
+	left: 32%;
+	z-index: 5;
+}
+
+#login-form table {
+	position: relative;
+	top: 55px;
+	left: 40px;
+}
+
+#login-form #login-btn {
+	width: 102px;
+	height: 38px;
+	background: url(../login_images/login-btn.png) no-repeat;
+	outline: 0 none;
+	position: relative;
+	top: 16px;
+	left: 204px;
+	border: none;
+	cursor: pointer;
+}
+
+#login-form #login-btn:hover {
+	background: url(../login_images/login-btn-hover.png) no-repeat;
+}
+
+#login-form #login-btn:active {
+	background: url(../login_images/login-btn-active.png) no-repeat;
+}
+
+#username {
+/* 	position: absolute;
+	margin-top: 300px;
+	margin-left: -253px;
+	position: relative; */
+}
+
+#password {
+	margin-left: 22px; 
+}
+
+#loginLable {
+/* 	font-size: 15px;
+	font-weight: 900; */
+}
+
+#loginButton {
+/* 	border:0px;
+	background-color:#F38093;
+	border-radius:50%; 
+	position: absolute;
+	margin-top: -33px;
+	margin-left: 211px;
+	background: url(../images/login/inlogin.jpg) repeat;
+	background-position: center;
+	background-repeat: no-repeat; */
+	border:0px;
+	margin-left: 20px;
+	background-color:#F38093;
+	border-radius:50%;
+	background: url(../images/login/inlogin.jpg) repeat;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-top: -12px;
+	padding-bottom: 10px;
+}
+#mps{
+	position: absolute;
+	margin-left: 115px;
+}

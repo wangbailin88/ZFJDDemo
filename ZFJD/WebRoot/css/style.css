@@ -1,0 +1,60 @@
+/**地图区域初始颜色*/
+path {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: .5px;
+}
+
+path:hover {
+    fill: red;
+}
+.southsea {
+	stroke: black;
+	stroke-width: 1px;
+	fill: #ccc;
+}
+
+
+.tooltip {
+	position: absolute;
+	width: 100;
+	height: 25;
+	style:1px solid red;
+}
+
+#tooltip{
+	width: 100px;
+	height: 20px;
+	style:1px solid red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.province {
+		stroke: #FFFFFF;
+		stroke-width: 1px;
+	}
+  
+	.southsea {
+		stroke: black;
+		stroke-width: 1px;
+		fill: #ccc;
+	}
+
+	.valueText {
+		font-family: arial;
+		font-size: 12px;
+		text-anchor: middle;
+	}
+	
+	

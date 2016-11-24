@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/lang
+		http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd">
+		
+		<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<!-- <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/> -->
+
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<jaxws:endpoint id="webServiceImpl"
+		implementor="com.ushine.ssh.webservice.WebServiceImpl"
+		address="/webservice" />
+		
+	<bean id="uploadImpl" class="com.ushine.ssh.webservice.WebServiceUploadImpl"/>
+	<jaxws:server id = "webServiceUploadImpl" serviceClass="com.ushine.ssh.webservice.IWebServiceUpload" address="/webserviceUpload">
+		<jaxws:serviceBean>
+			<ref bean="uploadImpl"/>
+		</jaxws:serviceBean>
+		<jaxws:properties>
+		 	<entry key="mtom-enabled" value="true"></entry>
+		</jaxws:properties>
+	</jaxws:server>
+		
+	<bean class="com.ushine.common.utils.SpringUtils" />
+	
+	
+	<!-- 基础模块 -->
+	<context:component-scan base-package="com.ushine.core.service.impl" />
+	<context:component-scan base-package="com.ushine.core.verify.impl" />
+	<context:component-scan base-package="com.ushine.ssh.service.impl" />
+	<context:component-scan base-package="com.ushine.ssh.webservice" />
+	
+	
+	
+	
+	
+	<!-- 基础库模块 -->
+	<context:component-scan base-package="com.ushine.util" />
+	<!-- 配置sessionFactory --> 
+	<bean id="sessionFactory" 
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value> 
+		</property>
+	</bean>
+	
+	<!-- 定义事务管理器（声明式的事务） -->  
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	
+	<!--启动spring注解功能-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- 基础Dao -->
+	<bean id="baseDao" class="com.ushine.dao.impl.BaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	
+	
+	
+	
+	
+	<!-- 
+        方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 
+    -->  
+    <!-- 定义目标bean -->  
+    <bean id="SpringQtzJob" class="com.ushine.ssh.qtzJob.QtzJob"> 
+    </bean> 
+    
+    
+    
+    
+    
+    <!-- ###################################定义执行函数 ######################################### -->
+    <!--获取当前节点黑盒状态信息函数-->
+    <bean id="getThisBlackBoxStatusInfoMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>getThisBlackBoxStatusInfo</value>  
+        </property>  
+    </bean>  
+    
+    <!-- 提交当前节点及下级节点黑匣子信息到上级节点函数-->
+     <bean id="submitThisNodeAndSubordinateNodeInfoMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>submitThisNodeAndSubordinateNodeInfo</value>  
+        </property>  
+    </bean>  
+    <!-- 调用删除当前节点黑匣子的状态信息函数-->
+     <bean id="deleteThisNodeAndSubordinateNodeInfoMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>deleteThisNodeAndSubordinateNodeInfo</value>  
+        </property>  
+    </bean> 
+    <!-- 提交本机的下级节点到本机的上级节点，任务调度将执行的函数-->
+     <bean id="submitSubordinateNodeInfoMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>submitSubordinateNodeInfo</value>  
+        </property>  
+    </bean> 
+    <!-- 提交业务系统注册信息到上级节点，任务调度将执行的函数-->
+     <bean id="submitVocationalWorkMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>submitVocationalWork</value>  
+        </property>  
+    </bean> 
+     <!-- 提交业务系统插件到上级节点，任务调度将执行的函数-->
+     <bean id="sumitVocationalWorkSystemVersionMethod"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod"> 
+            <value>sumitVocationalWorkSystemVersion</value>  
+        </property>  
+    </bean> 
+    
+    <!-- ####################################################################################### -->
+    
+    
+    
+    
+    
+    
+    
+  <!-- 0 22 15 * * ?//每天15:22   -->
+  <!-- 0 */1 * * * ?//每隔一分钟   -->
+    <!-- ======================== 调度触发器 ======================== -->  
+    <bean id="getThisBlackBoxStatusInfoCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="getThisBlackBoxStatusInfoMethod"></property>  
+        <property name="cronExpression" value="0 */1 * * * ?"></property>  
+    </bean>
+    <bean id="submitThisNodeAndSubordinateNodeInfoCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="submitThisNodeAndSubordinateNodeInfoMethod"></property>  
+        <property name="cronExpression" value="0 */1 * * * ?"></property>  
+    </bean>
+    <bean id="deleteThisNodeAndSubordinateNodeInfoCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="deleteThisNodeAndSubordinateNodeInfoMethod"></property>  
+        <property name="cronExpression" value="0 */30 * * * ?"></property>  
+    </bean>  
+    <bean id="submitSubordinateNodeInfoCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="submitSubordinateNodeInfoMethod"></property>  
+        <property name="cronExpression" value="0 */1 * * * ?"></property>  
+    </bean>  
+    <bean id="submitVocationalWorkCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="submitVocationalWorkMethod"></property>  
+        <property name="cronExpression" value="0 */1 * * * ?"></property>  
+    </bean>
+    <bean id="sumitVocationalWorkSystemVersionCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="sumitVocationalWorkSystemVersionMethod"></property>  
+        <property name="cronExpression" value="0 */1 * * * ?"></property>  
+    </bean>    
+  <!-- ============================================================== -->
+  
+  
+  
+  
+  
+  
+    <!-- ***************************** 调度工厂 ******************************************* -->  
+    <bean id="SpringJobSchedulerFactoryBean"  
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>
+            	<!-- 获取当前节点黑匣子状态信息 -->  
+                <ref bean="getThisBlackBoxStatusInfoCronTriggerBean" />  
+                <!-- 提交当前节点及下级节点黑匣子状态信息到上级节点 -->
+                <ref bean="submitThisNodeAndSubordinateNodeInfoCronTriggerBean" />
+                <!-- 删除当前节点及下级节点黑匣子状态信息数据 -->
+                <ref bean="deleteThisNodeAndSubordinateNodeInfoCronTriggerBean" />  
+                <!-- 提交本机的下级节点到本机的上级节点，任务调度将执行的函数-->
+                <ref bean="submitSubordinateNodeInfoCronTriggerBean" /> 
+                <!-- 提交业务系统注册信息到上级节点，任务调度将执行的函数-->
+                <ref bean="submitVocationalWorkCronTriggerBean" /> 
+                 <!-- 提交业务系统插件到上级节点，任务调度将执行的函数-->
+                <ref bean="sumitVocationalWorkSystemVersionCronTriggerBean" /> 
+            </list>  
+        </property>  
+    </bean>  
+	<!-- ******************************************************************************* -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 初始化应用 -->
+	<bean id="initCoreService" class="com.ushine.core.init.InitCoreServiceImpl"/>
+	<!--bean id="ConnectInitServiceImpl" class="com.ushine.core.init.ConnectInitServiceImpl"/-->
+	<bean class="com.ushine.common.init.SystemInitServiceFactoryBean"  init-method="init" destroy-method="destroy">
+		<property name="services">
+			<list>
+				<ref bean="initCoreService"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

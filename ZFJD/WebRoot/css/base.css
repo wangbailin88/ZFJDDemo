@@ -1,0 +1,156 @@
+@charset "utf-8";
+/********* 基本样式 ****************************************************/
+html, body {
+	height: 100%;
+	margin: 0px 0px;
+	font-family: "新宋体", Arial;
+	font-size: 12px;
+	color: #111;
+	background: url(../images/bj-1.jpg);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0px;
+	padding: 0px;
+	font-weight: normal;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+h4 {
+	font-size: 14px;
+}
+
+h5 {
+	font-size: 12px;
+}
+
+ul, li {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+input, select {
+	vertical-align: middle;
+	width: 200px;
+}
+
+input {
+	height: 20px;
+}
+
+select {
+	height: 24px;
+}
+
+textarea {
+	width: 280px;
+	height: 80px;
+}
+
+input, select, textarea {
+	font-family: "新宋体", Arial;
+	font-size: 12px;
+	color: #444444;
+	border: #999999 1px solid;
+}
+
+.file-imput {
+	display: block;
+}
+
+.select-input {
+	width: auto;
+	height: auto;
+	border: none;
+}
+
+.bContent {
+	height: 99%;
+}
+
+.win { /* 页面面板 */
+	margin: 3px 5px; 
+	border: #999999 1px solid;
+}
+
+.win-top-line {
+	border-top: #999999 1px solid;
+}
+
+.win-left-line {
+	border-left: #999999 1px solid;
+}
+
+.win-right-line {
+	border-right: #999999 1px solid;
+}
+
+.win-bottom-line {
+	border-bottom: #999999 1px solid;
+}
+
+.win-grid-bj {
+	background: url(../images/win-grid-bj.png) right;
+}
+
+.win-bj {
+	background: #fff;
+}
+
+.win-bottom-bj {/* 窗口底边 */
+	height: 20px;
+	background: url(../images/win-bottom-bj.png) repeat-x;
+}
+
+/********* 表单布局样式 ****************************************************/
+.win2 { /* 页面表单面板 */
+	margin: 20px;
+	border: #999999 1px solid;
+}
+
+.win3 {  /* 弹出窗口表单面板 */
+	margin: 20px;
+	border-left: #999999 1px solid;
+	border-right: #999999 1px solid;
+	border-bottom: #999999 1px solid;
+}
+
+.lable, .control {
+	border-top: #999999 1px solid;
+}
+
+.lable {
+	font-size: 12px;
+	width: 120px;
+	border-right: #999999 1px solid;
+	text-align: right;
+	padding-right: 10px;
+	background: #fff;
+}
+
+.control {
+	padding-left: 10px;
+	background: #fff;
+}
+
+.easyTip {
+	font-size: 12px;
+	color: #dd4141;
+}
+
+.input {
+	height: 40px;
+}
+
+.textarea {
+	height: 100px;
+}
